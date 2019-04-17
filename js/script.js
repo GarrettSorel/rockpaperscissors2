@@ -9,6 +9,7 @@ const btn = document.querySelectorAll('button');
     });
   });
 
+//keep score and set initial scores to zero
 const score = document.querySelector('#score');
 const showPlayerScore = document.createElement('div');
 const showComputerScore = document.createElement('div');
@@ -16,11 +17,16 @@ const showComputerScore = document.createElement('div');
 showPlayerScore.classList.add('scoreboard');
 showComputerScore.classList.add('scoreboard');
 
-showPlayerScore.textContent = 'Your Score ' + 0;
-showComputerScore.textContent = 'Computer\'s Score ' + 0;
+showPlayerScore.textContent = 'Your Score: ' + playerScore;
+showComputerScore.textContent = 'Computer\'s Score: ' + computerScore;
 
 score.appendChild(showPlayerScore);
 score.appendChild(showComputerScore);
+
+//create a new div and append to *results to show the result of the round
+const result = document.querySelector('#result');
+const showResult = document.createElement('div');
+result.parentNode.appendChild(showResult);
 
 //randomly generate the computer's choice
   function computerPlay() {
@@ -34,29 +40,45 @@ score.appendChild(showComputerScore);
     let playerLowerCase = playerSelection.toLowerCase();
 
     if (playerLowerCase === computerSelection) {
-      window.alert("You picked " + playerLowerCase + " and the computer selected " + computerSelection + ". It's a tie!");
+      showResult.textContent = 'It\'s a tie!';
     } else if  (playerLowerCase == 'rock' && computerSelection == 'scissors') {
        playerScore ++;
-       window.alert("You picked rock and the computer picked scissors. You win!");
+       showResult.textContent = "The computer picked scissors. You win!";
     } else if  (playerLowerCase == 'rock' && computerSelection == 'paper') {
         computerScore++;
-        window.alert("You picked rock and the computer picked paper. You lose!");
+        showResult.textContent = "The computer picked paper. You lose!";
     } else if (playerLowerCase == 'scissors' && computerSelection == 'paper') {
         playerScore ++;
-        window.alert("You picked scissors and the computer picked paper. You win!");
+        showResult.textContent = "The computer picked paper. You win!";
     } else if (playerLowerCase == 'scissors' && computerSelection == 'rock') {
         computerScore++;
-        window.alert("You picked scissors and the computer picked rock. You lose!");
+        showResult.textContent = "The computer picked rock. You lose!";
     } else if (playerLowerCase == 'paper' && computerSelection == 'rock') {
         playerScore++;
-        window.alert("You picked paper and the computer picked rock. You win!");
+        showResult.textContent = "The computer picked rock. You win!";
     } else {
         computerScore++;
-        window.alert("You picked paper and the computer picked scissors. You lose!");
+        showResult.textContent = "The computer picked scissors. You lose!";
     }
   }
 
   function updateScore() {
-    showPlayerScore.textContent = 'Your Score ' + playerScore;
-    showComputerScore.textContent = 'Computer\'s Score ' + computerScore;
+    showPlayerScore.textContent = 'Your Score: ' + playerScore;
+    showComputerScore.textContent = 'Computer\'s Score: ' + computerScore;
+
+    if (playerScore === 5) {
+      alert("You win!")
+      resetGame();
+    } else if (computerScore === 5) {
+      alert("You lose!")
+      resetGame();
+    }
+  }
+
+  function resetGame() {
+    let playerScore = 0;
+    let computerScore = 0;
+    showPlayerScore.textContent = 'Your Score: ' + playerScore;
+    showComputerScore.textContent = 'Computer\'s Score: ' + computerScore;
+    showResult.textContent = "New game."
   }
